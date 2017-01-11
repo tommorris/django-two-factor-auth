@@ -6,30 +6,39 @@ python:
  - 3.5
 
 env:
- - DJANGO=1.8
- - DJANGO=1.9
- - DJANGO=1.10
- - DJANGO=master
+ - DJANGO=1.8 VARIANT=normal
+ - DJANGO=1.9 VARIANT=normal
+ - DJANGO=1.10 VARIANT=normal
+ - DJANGO=master VARIANT=normal
 
 matrix:
   include:
     - python: 2.7
-      env: DJANGO=1.8 CUSTOM_USER=1 YUBIKEY=1
+      env: DJANGO=1.8 VARIANT=yubikey
+    - python: 2.7
+      env: DJANGO=1.8 VARIANT=custom_user
     - python: 3.4
-      env: DJANGO=1.9 CUSTOM_USER=1 YUBIKEY=1
+      env: DJANGO=1.9 VARIANT=yubikey
+    - python: 3.4
+      env: DJANGO=1.9 VARIANT=custom_user
     - python: 3.5
-      env: DJANGO=1.10 CUSTOM_USER=1 YUBIKEY=1
+      env: DJANGO=1.10 VARIANT=yubikey
+    - python: 3.5
+      env: DJANGO=1.10 VARIANT=custom_user
     - python: 3.6
-      env: DJANGO=master
+      env: DJANGO=master VARIANT=normal
     - python: 3.6
-      env: DJANGO=master CUSTOM_USER=1 YUBIKEY=1
+      env: DJANGO=master VARIANT=yubikey
+    - python: 3.6
+      env: DJANGO=master VARIANT=custom_user
     - python: 3.5
       env: TOXENV=isort
     - python: 3.5
       env: TOXENV=flake8
   allow_failures:
-    - env: DJANGO=master
-    - env: DJANGO=master CUSTOM_USER=1 YUBIKEY=1
+    - env: DJANGO=master VARIANT=normal
+    - env: DJANGO=master VARIANT=yubikey
+    - env: DJANGO=master VARIANT=custom_user
 
 install:
   - pip install "git+git://github.com/Bouke/tox-travis.git@features/obey_outcomes"
