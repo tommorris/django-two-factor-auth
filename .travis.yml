@@ -1,76 +1,39 @@
 language: python
 
-python: 3.5
+python:
+ - 2.7
+ - 3.4
+ - 3.5
 
 env:
-  - TOXENV=flake8
-  - TOXENV=isort
-  
-  - TOXENV=py27-dj18
-  - TOXENV=py27-dj18-custom_user
-  - TOXENV=py27-dj18-yubikey
-  - TOXENV=py27-dj19
-  - TOXENV=py27-dj19-custom_user
-  - TOXENV=py27-dj19-yubikey
-  - TOXENV=py27-dj110
-  - TOXENV=py27-dj110-custom_user
-  - TOXENV=py27-dj110-yubikey
-  - TOXENV=py27-djmaster
-  - TOXENV=py27-djmaster-custom_user
-  - TOXENV=py27-djmaster-yubikey
-
-  - TOXENV=py34-dj18
-  - TOXENV=py34-dj18-custom_user
-  - TOXENV=py34-dj18-yubikey
-  - TOXENV=py34-dj19
-  - TOXENV=py34-dj19-custom_user
-  - TOXENV=py34-dj19-yubikey
-  - TOXENV=py34-dj110
-  - TOXENV=py34-dj110-custom_user
-  - TOXENV=py34-dj110-yubikey
-  - TOXENV=py34-djmaster
-  - TOXENV=py34-djmaster-custom_user
-  - TOXENV=py34-djmaster-yubikey
-
-  - TOXENV=py35-dj18
-  - TOXENV=py35-dj18-custom_user
-  - TOXENV=py35-dj18-yubikey
-  - TOXENV=py35-dj19
-  - TOXENV=py35-dj19-custom_user
-  - TOXENV=py35-dj19-yubikey
-  - TOXENV=py35-dj110
-  - TOXENV=py35-dj110-custom_user
-  - TOXENV=py35-dj110-yubikey
-  - TOXENV=py35-djmaster
-  - TOXENV=py35-djmaster-custom_user
-  - TOXENV=py35-djmaster-yubikey
-
-  - TOXENV=py36-djmaster
-  - TOXENV=py36-djmaster-custom_user
-  - TOXENV=py36-djmaster-yubikey
-
-install:
-  - pip install -U pip
-  - pip install -U tox
-  - pip install coveralls
-
-script:
-  - tox -e ${TOXENV}
+ - DJANGO=1.8
+ - DJANGO=1.8 CUSTOM_USER=1
+ - DJANGO=1.8 YUBIKEY=1
+ - DJANGO=1.9
+ - DJANGO=1.9 CUSTOM_USER=1
+ - DJANGO=1.9 YUBIKEY=1
+ - DJANGO=1.10
+ - DJANGO=1.10 CUSTOM_USER=1
+ - DJANGO=1.10 YUBIKEY=1
+ - DJANGO=master
+ - DJANGO=master CUSTOM_USER=1
+ - DJANGO=master YUBIKEY=1
 
 matrix:
+  include:
+    - python: 3.5
+      env: isort
+    - python: 3.6
+      env: DJANGO=master
+    - python: 3.5
+      env: TOXENV=flake8
   allow_failures:
-    - env: TOXENV=py27-djmaster
-    - env: TOXENV=py27-djmaster-custom_user
-    - env: TOXENV=py27-djmaster-yubikey
-    - env: TOXENV=py34-djmaster
-    - env: TOXENV=py34-djmaster-custom_user
-    - env: TOXENV=py34-djmaster-yubikey
-    - env: TOXENV=py35-djmaster
-    - env: TOXENV=py35-djmaster-custom_user
-    - env: TOXENV=py35-djmaster-yubikey
-    - env: TOXENV=py36-djmaster
-    - env: TOXENV=py36-djmaster-custom_user
-    - env: TOXENV=py36-djmaster-yubikey
+    - env: DJANGO=master
+    - env: DJANGO=master CUSTOM_USER=1
+    - env: DJANGO=master YUBIKEY=1
 
-after_success:
-    coveralls
+install:
+  - pip install "git+git://github.com/Bouke/tox-travis.git@features/obey_outcomes"
+  - pip install coveralls
+script: tox
+after_success: coveralls
