@@ -13,8 +13,6 @@ env:
 
 matrix:
   include:
-    - python: 3.5
-      env: isort
     - python: 2.7
       env: DJANGO=1.8 CUSTOM_USER=1 YUBIKEY=1
     - python: 3.4
@@ -25,6 +23,8 @@ matrix:
       env: DJANGO=master
     - python: 3.6
       env: DJANGO=master CUSTOM_USER=1 YUBIKEY=1
+    - python: 3.5
+      env: TOXENV=isort
     - python: 3.5
       env: TOXENV=flake8
   allow_failures:
