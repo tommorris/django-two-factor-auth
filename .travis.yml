@@ -7,30 +7,29 @@ python:
 
 env:
  - DJANGO=1.8
- - DJANGO=1.8 CUSTOM_USER=1
- - DJANGO=1.8 YUBIKEY=1
  - DJANGO=1.9
- - DJANGO=1.9 CUSTOM_USER=1
- - DJANGO=1.9 YUBIKEY=1
  - DJANGO=1.10
- - DJANGO=1.10 CUSTOM_USER=1
- - DJANGO=1.10 YUBIKEY=1
  - DJANGO=master
- - DJANGO=master CUSTOM_USER=1
- - DJANGO=master YUBIKEY=1
 
 matrix:
   include:
     - python: 3.5
       env: isort
+    - python: 2.7
+      env: DJANGO=1.8 CUSTOM_USER=1 YUBIKEY=1
+    - python: 3.4
+      env: DJANGO=1.9 CUSTOM_USER=1 YUBIKEY=1
+    - python: 3.5
+      env: DJANGO=1.10 CUSTOM_USER=1 YUBIKEY=1
     - python: 3.6
       env: DJANGO=master
+    - python: 3.6
+      env: DJANGO=master CUSTOM_USER=1 YUBIKEY=1
     - python: 3.5
       env: TOXENV=flake8
   allow_failures:
     - env: DJANGO=master
-    - env: DJANGO=master CUSTOM_USER=1
-    - env: DJANGO=master YUBIKEY=1
+    - env: DJANGO=master CUSTOM_USER=1 YUBIKEY=1
 
 install:
   - pip install "git+git://github.com/Bouke/tox-travis.git@features/obey_outcomes"
